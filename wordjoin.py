@@ -10,10 +10,22 @@ useful for the first four long words that form the edge of a crossword puzzle.
 """
 
 from scrape.wordscrape import wordscrape
+import itertools
 
 wordlist0 = wordscrape("p????????")
 wordlist1 = wordscrape("????????m")
 
-common = [(word0, word1) for (word0, word1) in zip(wordlist0, wordlist1)
-	if word0[-1]==word1[0]]
-print(common)
+
+#common = [(word0, word1) for (word0, word1) in zip(wordlist0, wordlist1)
+#	if word0[-1]==word1[0]]
+#print(common)
+
+wordproducts = itertools.product(wordlist0, wordlist1)
+
+for wordproduct in wordproducts:
+	word0, word1 = wordproduct
+	if word0[-1] == word1[0]:
+		print(wordproduct)
+#common = [
+#		(word0, word1) for (word0, word1) in
+#		]
