@@ -9,23 +9,42 @@ useful for the first four long words that form the edge of a crossword puzzle.
 @author: Jonas Svenstrup Hansen <jonas.svenstrup@gmail.com>
 """
 
-from scrape.wordscrape import wordscrape
 import itertools
+import argparse
 
-wordlist0 = wordscrape("p????????")
-wordlist1 = wordscrape("????????m")
+from scrape.wordscrape import wordscrape
 
 
-#common = [(word0, word1) for (word0, word1) in zip(wordlist0, wordlist1)
-#	if word0[-1]==word1[0]]
-#print(common)
+def wordjoin(wordlist0, wordlist1m, N0, N1):
+	wordproducts = itertools.product(wordlist0, wordlist1)
 
-wordproducts = itertools.product(wordlist0, wordlist1)
+	wordpairs = []
 
-for wordproduct in wordproducts:
-	word0, word1 = wordproduct
-	if word0[-1] == word1[0]:
-		print(wordproduct)
-#common = [
-#		(word0, word1) for (word0, word1) in
-#		]
+	for wordproduct in wordproducts:
+		word0, word1 = wordproduct
+		if word0[N0] == word1[N1]:
+			wordpairs.append(wordproduct)
+
+	return wordpairs
+
+
+if __name__=="__main__":
+	# Parse command line arguments:
+	parser = argparse.ArgumentParser(description='Print a list of joined words.')
+	parser.add_argument('word0', metavar='word0', help='First word to use')
+	parser.add_argument('word1', metavar='word1', help='Second word to use')
+	parser.add_argument('N0', metavar='N0', type=int, help='Integer position of common letter in first word (zero-based)')
+	parser.add_argument('N1', metavar='N1', type=int, help='Integer position of common letter in second word (zero-based)')
+
+	args = parser.parse_args()
+
+	word0 = args.word0
+	word1 = args.word1
+	N0 = args.N0
+	N1 = args.N1
+
+	wordlist0 = wordscrape(word0)
+	wordlist1 = wordscrape(word1)
+
+	wordpairs = wordjoin(wordlist0, wordlist1, N0, N1)
+	print(wordpairs)
