@@ -33,18 +33,25 @@ if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Print a list of joined words.')
 	parser.add_argument('word0', metavar='word0', help='First word to use')
 	parser.add_argument('word1', metavar='word1', help='Second word to use')
-	parser.add_argument('N0', metavar='N0', type=int, help='Integer position of common letter in first word (zero-based)')
-	parser.add_argument('N1', metavar='N1', type=int, help='Integer position of common letter in second word (zero-based)')
 
 	args = parser.parse_args()
 
 	word0 = args.word0
 	word1 = args.word1
-	N0 = args.N0
-	N1 = args.N1
 
+	# Get common letter integers from & character position in words:
+	N0 = word0.find('&')
+	N1 = word1.find('&')
+
+	# Replace standin common letter character:
+	word0 = word0.replace('&','?')
+	word1 = word1.replace('&','?')
+
+	# Scrape website
 	wordlist0 = wordscrape(word0)
 	wordlist1 = wordscrape(word1)
 
+	# Get wordpairs:
 	wordpairs = wordjoin(wordlist0, wordlist1, N0, N1)
-	print(wordpairs)
+	for wordpair in wordpairs:
+		print(wordpair)
