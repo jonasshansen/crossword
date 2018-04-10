@@ -53,5 +53,8 @@ if __name__=="__main__":
 
 	# Get wordpairs:
 	wordpairs = wordjoin(wordlist0, wordlist1, N0, N1)
-	for wordpair in wordpairs:
-		print(wordpair)
+	if not wordpairs:
+		print("No word pairs found.")
+	else:
+		for wordpair in wordpairs:
+			print(wordpair)
