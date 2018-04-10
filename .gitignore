@@ -1,0 +1,2 @@
+# ignore all .swp files that are usually created by vim
+*.swp
