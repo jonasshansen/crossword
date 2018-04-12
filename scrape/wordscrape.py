@@ -51,7 +51,7 @@ def get_num_pages(websitename, websitebase, searchword):
 	num_pages = get_pagenum_from_words(pagenumber_words)
 
 	pages_left = True
-	while pages_left == True:
+	while pages_left:
 		if (num_pages == 10) or (num_pages > 10 and (num_pages-10) % 4 == 0):
 			# Make new scraping of latest page:
 			websitename = get_websitename(num_pages-1, websitebase, searchword)
